@@ -9,6 +9,7 @@ namespace GranCook.Interfaces
     public interface IGameManager
     {
         IPlayer[] Players { get; set; }
+        int PlayerCount { get; set; }
 
         void RoundWin(IPlayer winner);
         void RoundLose(IPlayer loser);
