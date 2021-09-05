@@ -11,6 +11,10 @@ namespace GranCook
     {
         public IPlayer Player { get; set; }
 
+        public GameBoardBehavior gameBoardBehavior;
+
+        bool axisSelected = false;
+
         void Start()
         {   
         
@@ -31,7 +35,11 @@ namespace GranCook
         {
             Vector2 dir = value.Get<Vector2>();
             PrintInputActionState("Movement");
-
+            if (!axisSelected)
+            {
+                // Move the cursor
+                Player.GameBoard.Cursor = Player.GameBoard.MoveCursor(dir);
+            }
         }
 
         public void OnGamePause(InputValue value)

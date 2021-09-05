@@ -4,15 +4,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace GranCook
-{
+{   
     public class GameBoardBehavior : MonoBehaviour
     {
         public float Length => gridSize * cellInBetweenDistance;
+        public IPlayer Player { get; set; }
 
         public int gridSize = 5;
         public float cellScale = 1f;
         public float cellInBetweenDistance = 1f;
 
+
+        public Color[] debugCellColors = new Color[6];
         public bool debugShowGridCells = false;
 
         Vector2[,] grid;
@@ -35,7 +38,11 @@ namespace GranCook
         // Update is called once per frame
         void Update()
         {
-        
+            // Move the cursor 
+            Vector2 cursorPosInBoard = Player.GameBoard.Cursor;
+            Vector3 cursorPosInWorld = grid[(int)cursorPosInBoard.x, (int)cursorPosInBoard.y];
+            cursorPosInWorld.z = -1;
+            cursor.transform.position = Vector2.Lerp(cursor.transform.position, cursorPosInWorld, .2f);
         }
 
         void GenerateCursor()
@@ -55,9 +62,14 @@ namespace GranCook
                 for (int j = 0; j < gridSize; j++)
                 {
                     GameObject cellObj = Instantiate(cellPrefab);
+                    int cellValue = Player.GameBoard.Grid[i, j];
 
                     cellObj.transform.parent = cellContainer;
-                    cellObj.transform.position = grid[i, j];
+                    Vector3 pos = grid[i, j];
+                    pos.z = 1;
+                    cellObj.transform.position = pos;
+                    cellObj.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = cellValue.ToString();
+                    cellObj.GetComponent<SpriteRenderer>().color = debugCellColors[cellValue];
                 }
             }
         }

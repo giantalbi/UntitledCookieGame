@@ -1,4 +1,5 @@
 using GranCook.Interfaces;
+using GranCook.Objects;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,6 +22,7 @@ namespace GranCook
             PlayerId = Guid.NewGuid();
             PlayerIndex = index;
             Input = input;
+            GameBoard = new GameBoard();
         }
 
         public void CheckGameBoardMatch()

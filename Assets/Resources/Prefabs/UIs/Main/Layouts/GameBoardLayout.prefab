@@ -482,4 +482,11 @@ MonoBehaviour:
   gridSize: 5
   cellScale: 1
   cellInBetweenDistance: 1
-  debugShowGridCells: 1
+  debugCellColors:
+  - {r: 0.3773585, g: 0.3773585, b: 0.3773585, a: 1}
+  - {r: 0.4056604, g: 0.17030083, b: 0.17030083, a: 1}
+  - {r: 0.16273583, g: 0.16843142, b: 0.21698111, a: 1}
+  - {r: 0.3490566, g: 0.2956479, b: 0.17946778, a: 1}
+  - {r: 0.3773585, g: 0.16553932, b: 0.31819242, a: 1}
+  - {r: 0.27887064, g: 0.4245283, b: 0.25832146, a: 1}
+  debugShowGridCells: 0
