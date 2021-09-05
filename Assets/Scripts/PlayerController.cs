@@ -9,7 +9,7 @@ namespace GranCook
     [RequireComponent(typeof(PlayerInput))]
     public class PlayerController : MonoBehaviour
     {
-        public Player Player { get; set; }
+        public IPlayer Player { get; set; }
 
         void Start()
         {   

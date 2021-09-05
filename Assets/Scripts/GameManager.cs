@@ -41,6 +41,8 @@ namespace GranCook
 
         public void GameStart()
         {
+            SetInputState(true);
+
             // Switch every control scheme to Game controls
             for(int i = 0; i < PlayerCount; i++)
             {
@@ -48,6 +50,35 @@ namespace GranCook
             }
 
             SceneLoader.Instance.Load("Main");
+            SceneLoader.Instance.OnSceneLoaded += GameStarted;
+        }
+
+        public void SetInputActionMap(string mapName)
+        {
+            for (int i = 0; i < PlayerCount; i++)
+            {
+                Players[i].Input.SwitchCurrentActionMap(mapName);
+            }
+        }
+
+        public void SetInputState(bool active)
+        {
+            for (int i = 0; i < PlayerCount; i++)
+            {
+                Players[i].Input.gameObject.SetActive(active);
+            }
+        }
+
+        void GameStarted()
+        {
+            // Instantiate the gameboard layout depending on the amount of player
+            GameObject gameboardLayout = Object.Instantiate(Resources.Load("Prefabs/UIs/Main/GameBoardLayouts" + PlayerCount, typeof(GameObject))) as GameObject;
+
+            // Setup every gameboard with their player
+
+
+            SetInputState(true);
+            SceneLoader.Instance.OnSceneLoaded -= GameStarted;
         }
 
         public void Pause()
