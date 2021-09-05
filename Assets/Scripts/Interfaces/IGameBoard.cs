@@ -9,9 +9,10 @@ namespace GranCook.Interfaces
 {
     public interface IGameBoard
     {
-        Ingredient[,] IngredientGrid { get; set; }
+        int[,] Grid { get; set; }
+        Vector2 Cursor { get; set; }
 
-        Ingredient[,] GenerateGameBoard();
+        int[,] GenerateGameBoard();
         /// <summary>
         /// Moves the cursor
         /// </summary>
@@ -25,27 +26,29 @@ namespace GranCook.Interfaces
         void RowShiftRight(int rowIndex);
 
         /// <summary>
-        /// Generates Row of Ingredients from top of grid
+        /// Generates Rows of Ingredients from top of grid
         /// </summary>
-        void GenerateNewRow();
+        /// /// <param name="rowAmount">Number of rows to be generated</param>
+        void GenerateNewRows(int rowAmount);
 
         /// <summary>
-        /// Generates Column of Ingredients from right side of grid
+        /// Generates Columns of Ingredients from right side of grid
         /// </summary>
-        void GenerateNewCol();
+        /// <param name="colAmount">Number of columns to be generated</param>
+        void GenerateNewCols(int colAmount);
 
-        bool CheckColumnMatch(int col, out Ingredient matchType);
-        bool CheckRowMatch(int row, out Ingredient matchType);
+        bool CheckColumnMatch(int colIndex, out int matchIngredient);
+        bool CheckRowMatch(int rowIndex, out int matchIngredient);
 
         void ClearColumn(int colIndex);
         void ClearRow(int rowIndex);
         /// <summary>
         /// Push non-empty columns to the left
         /// </summary>
-        void ShiftClearedColumn();
+        void ShiftClearedColumns();
         /// <summary>
         /// Push non-empty rows downward
         /// </summary>
-        void ShiftClearedRow();
+        void ShiftClearedRows();
     }
 }

@@ -69,9 +69,21 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 88282b7a-c82f-4a8b-85ce-b88c2180aec2
     m_ActionName: GameBoardActions/Pause[/XInputControllerWindows/start,/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f9b9f294-201b-4f24-b662-1a3b432bbdd4
+    m_ActionName: MenuActions/MenuSelect
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c25a38a8-5506-4aba-b9db-3244a7d251a5
+    m_ActionName: MenuActions/MenuDirection
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2fd0a7e5-82c3-4455-91ac-6c31af2c6d3a
+    m_ActionName: MenuActions/MenuStart
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: 5e7c440b-b6f6-44ce-af9a-3881bc813055
+  m_DefaultActionMap: MenuActions
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &5864610936899360120

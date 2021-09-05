@@ -10,6 +10,5 @@ namespace GranCook
     {
         public Ingredient[] Ingredients { get; set; }
         public string Name { get; set; }
-        public int MyProperty { get; set; }
     }
 }
