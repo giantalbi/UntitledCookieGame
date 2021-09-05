@@ -72,7 +72,7 @@ namespace GranCook
         void GameStarted()
         {
             // Instantiate the gameboard layout depending on the amount of player
-            GameObject gameboardLayout = Object.Instantiate(Resources.Load("Prefabs/UIs/Main/GameBoardLayouts" + PlayerCount, typeof(GameObject))) as GameObject;
+            GameObject gameboardLayout = Object.Instantiate(Resources.Load("Prefabs/UIs/Main/Layouts/GameBoardLayouts" + PlayerCount, typeof(GameObject))) as GameObject;
 
             // Setup every gameboard with their player
 

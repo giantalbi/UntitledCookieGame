@@ -7,18 +7,123 @@ namespace GranCook
 {
     public class GameBoardBehavior : MonoBehaviour
     {
-        private IGameBoard _board;
+        public float Length => gridSize * cellInBetweenDistance;
+
+        public int gridSize = 5;
+        public float cellScale = 1f;
+        public float cellInBetweenDistance = 1f;
+
+        public bool debugShowGridCells = false;
+
+        Vector2[,] grid;
+
+        Transform cellContainer;
+
+        GameObject cursor;
 
         // Start is called before the first frame update
         void Start()
         {
-        
+            cellContainer = transform.Find("GameBoard");
+            grid = GetGrid(cellContainer.position);
+
+            GenerateCursor();
+            GenerateGridGameObjects();
+            
         }
 
         // Update is called once per frame
         void Update()
         {
         
+        }
+
+        void GenerateCursor()
+        {
+            GameObject cursorPrefab = Resources.Load("Prefabs/UIs/Main/Cursor") as GameObject;
+            cursor = Instantiate(cursorPrefab);
+            cursor.transform.parent = cellContainer;
+            cursor.transform.localPosition = Vector2.zero;
+        }
+
+        void GenerateGridGameObjects()
+        {
+            GameObject cellPrefab = Resources.Load("Prefabs/UIs/Main/Cell") as GameObject;
+
+            for (int i = 0; i < gridSize; i++)
+            {
+                for (int j = 0; j < gridSize; j++)
+                {
+                    GameObject cellObj = Instantiate(cellPrefab);
+
+                    cellObj.transform.parent = cellContainer;
+                    cellObj.transform.position = grid[i, j];
+                }
+            }
+        }
+
+
+        Vector2[,] GetGrid(Vector2 gridOrigin)
+        {
+            Vector2[,] grid = new Vector2[gridSize, gridSize];
+            float half = Length / 2;
+            float distance = Length / gridSize;
+            Vector2 origin = new Vector2(-half + distance /2 , half - distance / 2);
+
+            for (int i = 0; i < gridSize; i++)
+            {
+                for(int j = 0; j < gridSize; j++)
+                {
+                    grid[i, j] = gridOrigin + origin;
+
+                    origin.x += distance;
+                }
+
+                origin.x = -half + distance / 2;
+                origin.y -= distance;
+            }
+
+            return grid;
+        }
+
+        private void OnDrawGizmos()
+        {
+            if (debugShowGridCells)
+            {
+                Vector2 pos = transform.Find("GameBoard").position;
+                var grid = GetGrid(pos);
+                var half = Length / 2;
+
+                int count = 0;
+
+                for (int i = 0; i < gridSize; i++)
+                {
+                    for (int j = 0; j < gridSize; j++)
+                    {
+                        if(count == 0)
+                            Gizmos.color = Color.red;
+                        else if(count == (gridSize * gridSize) - 1)
+                            Gizmos.color = Color.green;
+                        else
+                            Gizmos.color = Color.white;
+
+                        Gizmos.DrawSphere(grid[i, j], cellScale / 2);
+                        count++;
+                    }
+                }
+
+                // Top Line
+                Gizmos.DrawLine(pos + new Vector2(-half, half), pos + new Vector2(half, half));
+
+                // Left Line
+                Gizmos.DrawLine(pos + new Vector2(-half, half), pos + new Vector2(-half, -half));
+
+                // Bottom Line
+                Gizmos.DrawLine(pos + new Vector2(-half, -half), pos + new Vector2(half, -half));
+
+                // Right Line
+                Gizmos.DrawLine(pos + new Vector2(half, -half), pos + new Vector2(half, half));
+            }
         }
     }
 }
