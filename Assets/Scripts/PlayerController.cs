@@ -28,7 +28,7 @@ namespace GranCook
         public void OnGameSelect()
         {
             PrintInputActionState("Select");
-
+            axisSelected = !axisSelected;
         }
 
         public void OnGameMovement(InputValue value)

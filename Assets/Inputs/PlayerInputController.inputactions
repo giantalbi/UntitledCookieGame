@@ -11,7 +11,7 @@
                     "id": "92e5a382-2f23-46fd-9a77-7732dc5f0c7e",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Press(behavior=2)"
                 },
                 {
                     "name": "GameMovement",
