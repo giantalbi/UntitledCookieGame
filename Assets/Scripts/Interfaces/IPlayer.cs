@@ -11,6 +11,8 @@ namespace GranCook.Interfaces
     public interface IPlayer
     {
         public Guid PlayerId { get; set; }
+        public int PlayerIndex { get; set; }
+
         public PlayerInput Input { get; set; }
         public IGrandma Grandma { get; set; }
         public IGameBoard GameBoard { get; set; }

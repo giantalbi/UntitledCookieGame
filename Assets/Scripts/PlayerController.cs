@@ -11,13 +11,11 @@ namespace GranCook
     {
         public Player Player { get; set; }
 
-        // Start is called before the first frame update
         void Start()
         {   
         
         }
 
-        // Update is called once per frame
         void Update()
         {
         
@@ -25,22 +23,37 @@ namespace GranCook
 
         public void OnGameSelect()
         {
+            PrintInputActionState("Select");
 
         }
 
         public void OnGameMovement(InputValue value)
         {
-            Debug.Log(value);
+            Vector2 dir = value.Get<Vector2>();
+            PrintInputActionState("Movement");
+
         }
 
-        public void OnGamePause()
+        public void OnGamePause(InputValue value)
         {
-            Debug.Log("Paused");
+            PrintInputActionState("Paused");
         }
 
-        public void OnMenuStart()
+        public void OnMenuStart(InputValue value)
         {
+            PrintInputActionState("Start");
             GameManager.Instance.GameStart();
+        }
+
+        public void OnMenuDirection(InputValue value)
+        {
+            PrintInputActionState("Direction");
+
+        }
+
+        void PrintInputActionState(string action, InputValue value = null)
+        {
+            Debug.Log(string.Format("[Player {0}] {1}", Player.PlayerIndex + 1, action));
         }
     }
 }

@@ -253,17 +253,6 @@
                 },
                 {
                     "name": "",
-                    "id": "b42cce78-5706-4b01-a956-aed53e01ed8f",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keybaord",
-                    "action": "GameSelect",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "6dba8da5-104d-401c-acad-64e0c0cfa1a3",
                     "path": "<Keyboard>/space",
                     "interactions": "",
@@ -338,61 +327,6 @@
                 }
             ],
             "bindings": [
-                {
-                    "name": "2D Vector",
-                    "id": "df5374ea-e756-404f-91f9-fe72b6560d5a",
-                    "path": "2DVector",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MenuDirection",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "up",
-                    "id": "1aa9d84b-41c9-4022-8fc8-ac2a624af4f7",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keybaord",
-                    "action": "MenuDirection",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "91a6a80a-c248-46fb-b871-a3a95429d870",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keybaord",
-                    "action": "MenuDirection",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "755529af-6dd5-40d3-8d54-927d7e0c0d21",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keybaord",
-                    "action": "MenuDirection",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "e269faa8-7dac-4e70-b9f5-20aa5944fc6a",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keybaord",
-                    "action": "MenuDirection",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
                 {
                     "name": "2D Vector",
                     "id": "40f72162-850c-41c1-a602-54b177110ee1",
@@ -557,17 +491,6 @@
                     "action": "MenuDirection",
                     "isComposite": false,
                     "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "e7c36f3d-8ae9-4ea2-b610-5b36dd85f889",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keybaord",
-                    "action": "MenuSelect",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 },
                 {
                     "name": "",

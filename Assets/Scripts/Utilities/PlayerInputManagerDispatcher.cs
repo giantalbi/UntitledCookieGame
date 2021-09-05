@@ -10,7 +10,7 @@ namespace GranCook.Utilities
     {
         public void OnPlayerJoined(PlayerInput playerInput)
         {
-            Player newPlayer = new Player(playerInput);
+            Player newPlayer = new Player(GameManager.Instance.PlayerCount, playerInput);
             PlayerController newPlayerController = playerInput.gameObject.GetComponent<PlayerController>();
             newPlayerController.Player = newPlayer;
 
@@ -19,7 +19,7 @@ namespace GranCook.Utilities
 
             DontDestroyOnLoad(playerInput.gameObject);
 
-            Debug.Log(string.Format("Player {0}", GameManager.Instance.PlayerCount));
+            Debug.Log(string.Format("[Player {0}] joined", GameManager.Instance.PlayerCount));
         }
 
         public void OnPlayerLeft(PlayerInput playerInput)
