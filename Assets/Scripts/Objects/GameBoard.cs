@@ -1,11 +1,9 @@
-﻿using GranCook.Interfaces;
+﻿using GranCook.Extensions;
+using GranCook.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
-using GranCook.Extensions;
 
 namespace GranCook.Objects
 {
@@ -71,21 +69,54 @@ namespace GranCook.Objects
 
         public void ShiftClearedColumns()
         {
-            int remaining = GRID_SIZE - 1;
-            int clearedAmt = 0;
             int[] row = Grid.GetRow(0);
-            for(int i = 0; i < remaining; i++)
+            int[] emptyCol = new int[GRID_SIZE];
+            emptyCol.Populate(-1);
+            IList<int[]> nonEmptyCols = new List<int[]>();
+
+            for (int i = 0; i < row.Length; i++)
             {
-                if(row[i] == -1)
+                if (row[i] != -1)
                 {
-                    clearedAmt++;
+                    nonEmptyCols.Add(Grid.GetColumn(i));
                 }
+            }
+
+            for (int i = 0; i < GRID_SIZE; i++)
+            {
+                int[] col = nonEmptyCols.ElementAtOrDefault(i) ?? emptyCol;
+                Grid.SetColumn(i, col);
             }
         }
 
         public void ShiftClearedRows()
         {
-            throw new NotImplementedException();
+            int[] col = Grid.GetColumn(0);
+            int[] emptyRow = new int[GRID_SIZE];
+            emptyRow.Populate(-1);
+            Stack<int[]> nonEmptyRows = new Stack<int[]>();
+
+            for (int i = 0; i < col.Length; i++)
+            {
+                if (col[i] != -1)
+                {
+                    nonEmptyRows.Push(Grid.GetRow(i));
+                }
+            }
+
+            for (int i = GRID_SIZE - 1; i >= 0; i--)
+            {
+                int[] row;
+                try
+                {
+                    row = nonEmptyRows.Pop();
+                }
+                catch(InvalidOperationException e)
+                {
+                    row = emptyRow;
+                }
+                Grid.SetRow(i, row);
+            }
         }
 
         public void GenerateNewCols(int colAmount)
