@@ -95,17 +95,12 @@ namespace GranCook.Objects
             int[] emptyRow = new int[GRID_SIZE];
             emptyRow.Populate(-1);
             Stack<int[]> nonEmptyRows = new Stack<int[]>();
-            int clearAmount = 0;
 
             for (int i = 0; i < col.Length; i++)
             {
                 if (col[i] != -1)
                 {
                     nonEmptyRows.Push(Grid.GetRow(i));
-                }
-                else
-                {
-                    clearAmount++;
                 }
             }
 
