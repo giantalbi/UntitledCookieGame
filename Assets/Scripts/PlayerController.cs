@@ -37,8 +37,13 @@ namespace GranCook
             PrintInputActionState("Movement");
             if (!axisSelected)
             {
+                // Avoid double inputs / diagonals
+                if (dir == Vector2.one || dir == Vector2.one * -1)
+                    return;
+
                 // Move the cursor
-                Player.GameBoard.Cursor = Player.GameBoard.MoveCursor(dir);
+                Player.GameBoard.MoveCursor(dir);
+                Debug.Log(Player.GameBoard.Grid[(int)Player.GameBoard.Cursor.x, (int)Player.GameBoard.Cursor.y]);
             }
         }
 

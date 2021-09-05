@@ -18,7 +18,7 @@ namespace GranCook.Objects
             var grid = GenerateGameBoard();
             Grid = grid;
 
-            Cursor = new Vector2(GRID_SIZE / 2, GRID_SIZE / 2);
+            //Cursor = new Vector2(GRID_SIZE / 2, GRID_SIZE / 2);
         }
 
         public int[,] GenerateGameBoard()
@@ -200,21 +200,23 @@ namespace GranCook.Objects
         #endregion
 
         #region Cursor Movement
-        public Vector2 MoveCursor(Vector2 dir)
+        public void MoveCursor(Vector2 dir)
         {
-            Vector2 newCursor = Cursor + dir;
+            Vector2 newCursor = Cursor;
+            newCursor.x += dir.x;
+            newCursor.y -= dir.y;
 
-            if (newCursor.x < 0) 
+            if (newCursor.x < 0)
                 newCursor.x = GRID_SIZE - 1;
-            else if (newCursor.x >= GRID_SIZE) 
+            else if (newCursor.x >= GRID_SIZE)
                 newCursor.x = 0;
 
             if (newCursor.y < 0)
                 newCursor.y = GRID_SIZE - 1;
-            else if (newCursor.y >= 0) 
+            else if (newCursor.y >= GRID_SIZE)
                 newCursor.y = 0;
 
-            return newCursor;
+            Cursor = newCursor;
         }
         #endregion
     }

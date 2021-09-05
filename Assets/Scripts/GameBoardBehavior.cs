@@ -64,6 +64,7 @@ namespace GranCook
                     GameObject cellObj = Instantiate(cellPrefab);
                     int cellValue = Player.GameBoard.Grid[i, j];
 
+                    cellObj.name = $"Cell ({i}, {j}) = {cellValue}";
                     cellObj.transform.parent = cellContainer;
                     Vector3 pos = grid[i, j];
                     pos.z = 1;
@@ -74,19 +75,18 @@ namespace GranCook
             }
         }
 
-
         Vector2[,] GetGrid(Vector2 gridOrigin)
         {
             Vector2[,] grid = new Vector2[gridSize, gridSize];
             float half = Length / 2;
             float distance = Length / gridSize;
-            Vector2 origin = new Vector2(-half + distance /2 , half - distance / 2);
+            Vector2 origin = new Vector2(-half + distance / 2, half - distance / 2);
 
             for (int i = 0; i < gridSize; i++)
             {
-                for(int j = 0; j < gridSize; j++)
+                for (int j = 0; j < gridSize; j++)
                 {
-                    grid[i, j] = gridOrigin + origin;
+                    grid[j, i] = gridOrigin + origin;
 
                     origin.x += distance;
                 }

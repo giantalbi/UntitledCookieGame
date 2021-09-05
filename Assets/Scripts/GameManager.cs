@@ -84,6 +84,20 @@ namespace GranCook
 
                 player.Input.gameObject.GetComponent<PlayerController>().gameBoardBehavior = gameBoard;
                 i++;
+
+                //Printing gameboard
+                for(int j = 0; j < 5; j++)
+                {
+                    string line = "";
+
+
+                    for (int k = 0; k < 5; k++)
+                    {
+                        line += player.GameBoard.Grid[j, k].ToString();
+                    }
+
+                    Debug.Log(line);
+                }
             }
 
             SetInputState(true);

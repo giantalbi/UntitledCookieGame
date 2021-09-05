@@ -18,7 +18,7 @@ namespace GranCook.Interfaces
         /// </summary>
         /// <param name="dir">Direction vector</param>
         /// <returns>New cursor position</returns>
-        Vector2 MoveCursor(Vector2 dir);
+        void MoveCursor(Vector2 dir);
         void ShiftAxis(Vector2 pos, Vector2 dir);
         void ColShiftUp(int colIndex);
         void ColShiftDown(int colIndex);

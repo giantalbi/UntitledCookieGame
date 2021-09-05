@@ -17,11 +17,10 @@ namespace GranCook.Extensions
             if (length <= 0) throw new ArgumentOutOfRangeException("length", "length should be above 0");
 
             int[] arr = new int[length];
-            Random rnd = new Random();
 
             for(int i = 0; i < length; i++)
             {
-                arr[i] = rnd.Next(floor, ceil);
+                arr[i] = UnityEngine.Random.Range(floor, ceil);
             }
 
             if (arr.AllMatch()) 
