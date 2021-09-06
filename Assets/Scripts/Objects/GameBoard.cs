@@ -139,16 +139,16 @@ namespace GranCook.Objects
             switch(dir)
             {
                 case Vector2 v when v == Vector2.up:
-                    ColShiftUp(Convert.ToInt32(pos.x));
+                    ColShiftUp(Convert.ToInt32(pos.y));
                     break;
                 case Vector2 v when v == Vector2.down:
-                    ColShiftDown(Convert.ToInt32(pos.x));
+                    ColShiftDown(Convert.ToInt32(pos.y));
                     break;
                 case Vector2 v when v == Vector2.left:
-                    RowShiftLeft(Convert.ToInt32(pos.y));
+                    RowShiftLeft(Convert.ToInt32(pos.x));
                     break;
-                case Vector2 v when v == Vector2.up:
-                    RowShiftRight(Convert.ToInt32(pos.y));
+                case Vector2 v when v == Vector2.right:
+                    RowShiftRight(Convert.ToInt32(pos.x));
                     break;
             }
         }
@@ -203,8 +203,8 @@ namespace GranCook.Objects
         public void MoveCursor(Vector2 dir)
         {
             Vector2 newCursor = Cursor;
-            newCursor.x += dir.x;
-            newCursor.y -= dir.y;
+            newCursor.x -= dir.y;
+            newCursor.y += dir.x;
 
             if (newCursor.x < 0)
                 newCursor.x = GRID_SIZE - 1;

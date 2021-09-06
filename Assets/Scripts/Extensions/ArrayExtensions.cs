@@ -167,5 +167,18 @@ namespace GranCook.Extensions
             }
         }
 
+        public static string DebugToString(this int[,] arr)
+        {
+            StringBuilder sb = new StringBuilder();
+            for(int i = 0; i < arr.GetLength(0); i++)
+            {
+                sb.AppendLine(string.Join(" ", arr.GetRow(i).Select(x => x.ToString())));
+            }
+            int[] row = arr.GetRow(0);
+            int[] col = arr.GetColumn(0);
+            string str = sb.ToString();
+            return sb.ToString();
+        }
+
     }
 }
