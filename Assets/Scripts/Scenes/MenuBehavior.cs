@@ -11,22 +11,35 @@ namespace GranCook.Scenes
     {
         public GameObject singlePlayerButton;
         public GameObject multiPlayerButton;
+        public GameObject optionsButton;
+        public GameObject applyButton;
 
-        public void LoadMultiPlayer()
+
+        void LoadMultiPlayer()
         {
             SceneLoader.Instance.Load("MultiplayerCharacterSelect");
+        }
+
+        void LoadOptions()
+        {
+            SceneLoader.Instance.Load("Options");
         }
 
         private void Start()
         {
             if(singlePlayerButton != null)
             {
-                singlePlayerButton.GetComponent<Button>().Select();
+
             }
 
             if(multiPlayerButton != null)
             {
                 multiPlayerButton.GetComponent<Button>().onClick.AddListener(LoadMultiPlayer);
+            }
+
+            if (optionsButton != null)
+            {
+                optionsButton.GetComponent<Button>().onClick.AddListener(LoadOptions);
             }
         }
     }
