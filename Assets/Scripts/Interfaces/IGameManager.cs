@@ -16,6 +16,7 @@ namespace GranCook.Interfaces
 
         void GameStart();
         void GameOver(IPlayer winner);
+        void GameReset();
 
         void Pause();
     }

@@ -50,6 +50,7 @@ namespace GranCook
         public void OnGamePause(InputValue value)
         {
             PrintInputActionState("Paused");
+            GameManager.Instance.GameReset();
         }
 
         public void OnMenuStart(InputValue value)

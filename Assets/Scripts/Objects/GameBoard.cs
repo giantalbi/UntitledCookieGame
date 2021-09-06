@@ -18,7 +18,7 @@ namespace GranCook.Objects
             var grid = GenerateGameBoard();
             Grid = grid;
 
-            //Cursor = new Vector2(GRID_SIZE / 2, GRID_SIZE / 2);
+            Cursor = new Vector2(GRID_SIZE / 2, GRID_SIZE / 2);
         }
 
         public int[,] GenerateGameBoard()

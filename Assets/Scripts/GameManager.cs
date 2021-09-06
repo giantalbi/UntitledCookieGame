@@ -116,5 +116,18 @@ namespace GranCook
         {
         }
 
+        public void GameReset()
+        {
+            foreach (var p in Players)
+            {
+                if(p != null)
+                    Object.Destroy(p.Input.gameObject);
+            }
+
+            Players = new Player[4];
+            PlayerCount = 0;
+
+            SceneLoader.Instance.Load("Intro");
+        }
     }
 }

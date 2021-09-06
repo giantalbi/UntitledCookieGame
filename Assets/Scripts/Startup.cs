@@ -12,7 +12,7 @@ namespace GranCook
         {
             GameManager.Instance = new GameManager();
 
-            SceneLoader.Instance.Load("Menu");
+            SceneLoader.Instance.Load("Intro");
         }
     }
 }

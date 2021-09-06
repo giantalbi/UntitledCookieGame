@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace GranCook
+namespace GranCook.Scenes
 {
     public class MenuBehavior : MonoBehaviour
     {
