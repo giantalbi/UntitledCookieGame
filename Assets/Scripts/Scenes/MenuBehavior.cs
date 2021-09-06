@@ -9,6 +9,7 @@ namespace GranCook.Scenes
 {
     public class MenuBehavior : MonoBehaviour
     {
+        public GameObject singlePlayerButton;
         public GameObject multiPlayerButton;
 
         public void LoadMultiPlayer()
@@ -18,6 +19,11 @@ namespace GranCook.Scenes
 
         private void Start()
         {
+            if(singlePlayerButton != null)
+            {
+                singlePlayerButton.GetComponent<Button>().Select();
+            }
+
             if(multiPlayerButton != null)
             {
                 multiPlayerButton.GetComponent<Button>().onClick.AddListener(LoadMultiPlayer);

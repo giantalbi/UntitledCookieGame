@@ -99,7 +99,6 @@ namespace GranCook
                 {
                     string line = "";
 
-
                     for (int k = 0; k < 5; k++)
                     {
                         line += player.GameBoard.Grid[j, k].ToString();
