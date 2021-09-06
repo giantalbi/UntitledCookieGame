@@ -494,3 +494,4 @@ MonoBehaviour:
   debugShowGridCells: 0
   isShifting: 0
   shiftDirection: 1
+  scoreBehavior: {fileID: 7038946911872160530}
