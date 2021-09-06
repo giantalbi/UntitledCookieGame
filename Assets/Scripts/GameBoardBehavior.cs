@@ -3,9 +3,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 namespace GranCook
-{   
+{
     public class GameBoardBehavior : MonoBehaviour
     {
         public float Length => gridSize * cellInBetweenDistance;
@@ -21,6 +22,7 @@ namespace GranCook
 
 
         public Color[] debugCellColors = new Color[6];
+        public Color debugEmptyColor;
         public bool debugShowGridCells = false;
 
         int rowToShiftIndex = -1;
@@ -31,6 +33,9 @@ namespace GranCook
         Transform shiftFirstCell;
         Transform cellToDelete;
         Vector2 lastCellDestination;
+        bool rowShiftInitiated = false;
+        bool colShiftInitiated = false;
+        IList<IngredientMatch> ingredientMatches;
 
         Vector2[,] grid;
 
@@ -43,10 +48,11 @@ namespace GranCook
         {
             cellContainer = transform.Find("GameBoard");
             grid = GetGrid(cellContainer.position);
+            ingredientMatches = new List<IngredientMatch>();
 
             GenerateCursor();
             GenerateGridGameObjects();
-            
+
         }
 
         // Update is called once per frame
@@ -58,16 +64,113 @@ namespace GranCook
             cursorPosInWorld.z = -1;
             cursor.transform.position = Vector2.Lerp(cursor.transform.position, cursorPosInWorld, cellMovementSpeed + Time.deltaTime);
 
-            if(rowToShiftIndex > -1)
+            if (rowToShiftIndex > -1)
             {
                 ShiftRow(rowToShiftIndex, shiftDirection);
             }
 
-            if(colToShiftIndex > -1)
+            if (colToShiftIndex > -1)
             {
                 ShiftCol(colToShiftIndex, shiftDirection);
             }
-            
+
+            if (!isShifting)
+            {
+                if (rowShiftInitiated)
+                {
+                    CheckForMatchingCols();
+                }
+
+                if (colShiftInitiated)
+                {
+                    CheckForMatchingRows();
+                }
+            }
+
+        }
+
+        public void CheckForMatchingRows()
+        {
+            for (int i = 0; i < gridSize; i++)
+            {
+                if (Player.GameBoard.CheckRowMatch(i, out int matchingIngredientType))
+                {
+                    ingredientMatches.Add(new IngredientMatch(i, matchingIngredientType));
+                }
+            }
+
+            if (ingredientMatches.Any())
+            {
+                ClearMatchingRows();
+                RowClearAnimation();
+            }
+
+            colShiftInitiated = false;
+        }
+
+        public void CheckForMatchingCols()
+        {
+            for (int i = 0; i < gridSize; i++)
+            {
+                if (Player.GameBoard.CheckColumnMatch(i, out int matchingIngredientType))
+                {
+                    ingredientMatches.Add(new IngredientMatch(i, matchingIngredientType));
+                }
+            }
+
+            if (ingredientMatches.Any())
+            {
+                ClearMatchingCols();
+                ColClearAnimation();
+            }
+
+            rowShiftInitiated = false;
+        }
+
+        public void ClearMatchingRows()
+        {
+            int matchCount = ingredientMatches.Count;
+            foreach (var match in ingredientMatches)
+            {
+                Player.GameBoard.ClearRow(match.Index);
+            }
+            Player.GameBoard.ShiftClearedRows();
+            Player.GameBoard.GenerateNewRows(matchCount);
+            ingredientMatches.Clear();
+            rowShiftInitiated = true;
+        }
+
+        public void ClearMatchingCols()
+        {
+            int matchCount = ingredientMatches.Count;
+            foreach (var match in ingredientMatches)
+            {
+                Player.GameBoard.ClearColumn(match.Index);
+            }
+            Player.GameBoard.ShiftClearedColumns();
+            Player.GameBoard.GenerateNewCols(matchCount);
+            ingredientMatches.Clear();
+            colShiftInitiated = true;
+        }
+
+        public void RowClearAnimation()
+        {
+            // TODO actual animation
+            foreach (Transform child in cellContainer)
+            {
+                Destroy(child.gameObject);
+            }
+            GenerateGridGameObjects();
+        }
+
+        public void ColClearAnimation()
+        {
+            // TODO actual animation
+            foreach (Transform child in cellContainer)
+            {
+                Destroy(child.gameObject);
+            }
+            GenerateGridGameObjects();
         }
 
         public void ShiftAxis(Vector2 position, Vector2 direction)
@@ -94,6 +197,7 @@ namespace GranCook
             if (!isShifting)
             {
                 isShifting = true;
+                rowShiftInitiated = true;
                 ShiftRowInit(rowIndex, direction);
             }
             ShiftRowAnimation(rowIndex, direction);
@@ -152,6 +256,7 @@ namespace GranCook
             if (!isShifting)
             {
                 isShifting = true;
+                colShiftInitiated = true;
                 ShiftColInit(colIndex, direction);
             }
             ShiftColAnimation(colIndex, direction);
@@ -238,7 +343,7 @@ namespace GranCook
                     pos.z = 1;
                     cellObj.transform.position = pos;
                     cellObj.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = cellValue.ToString();
-                    cellObj.GetComponent<SpriteRenderer>().color = debugCellColors[cellValue];
+                    cellObj.GetComponent<SpriteRenderer>().color = cellValue >= 0 ? debugCellColors[cellValue] : debugEmptyColor;
                 }
             }
         }
