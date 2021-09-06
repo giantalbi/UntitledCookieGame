@@ -43,12 +43,16 @@ namespace GranCook
 
         GameObject cursor;
 
+        public GameObject scoreBehavior;
+        TMPro.TextMeshProUGUI scoreCounter;
+
         // Start is called before the first frame update
         void Start()
         {
             cellContainer = transform.Find("GameBoard");
             grid = GetGrid(cellContainer.position);
             ingredientMatches = new List<IngredientMatch>();
+            scoreCounter = scoreBehavior.GetComponent<TMPro.TextMeshProUGUI>();
 
             GenerateCursor();
             GenerateGridGameObjects();
@@ -134,6 +138,9 @@ namespace GranCook
             {
                 Player.GameBoard.ClearRow(match.Index);
             }
+
+            ScoreUp(matchCount);
+
             Player.GameBoard.ShiftClearedRows();
             Player.GameBoard.GenerateNewRows(matchCount);
             ingredientMatches.Clear();
@@ -147,6 +154,9 @@ namespace GranCook
             {
                 Player.GameBoard.ClearColumn(match.Index);
             }
+
+            ScoreUp(matchCount);
+
             Player.GameBoard.ShiftClearedColumns();
             Player.GameBoard.GenerateNewCols(matchCount);
             ingredientMatches.Clear();
@@ -369,6 +379,12 @@ namespace GranCook
             }
 
             return grid;
+        }
+
+        public void ScoreUp(int points)
+        {
+            Player.GameState.CurrentScore += points;
+            scoreCounter.text = Player.GameState.CurrentScore.ToString();
         }
 
         private void OnDrawGizmos()

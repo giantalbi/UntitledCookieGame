@@ -23,16 +23,9 @@ namespace GranCook
             PlayerIndex = index;
             Input = input;
             GameBoard = new GameBoard();
-        }
 
-        public void CheckGameBoardMatch()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void MoveCursor(Vector2 dir)
-        {
-            throw new NotImplementedException();
+            // TODO adjustable gamestate values
+            GameState = new PlayerGameState(20, 0, 1, 20);
         }
     }
 }
