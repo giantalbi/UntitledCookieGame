@@ -14,6 +14,9 @@ namespace GranCook
         public int gridSize = 5;
         public float cellScale = 1f;
         public float cellInBetweenDistance = 1f;
+
+        public float cellMovementSpeed = .5f;
+
         public float Distance => Length / gridSize;
 
 
@@ -53,7 +56,7 @@ namespace GranCook
             Vector2 cursorPosInBoard = Player.GameBoard.Cursor;
             Vector3 cursorPosInWorld = grid[(int)cursorPosInBoard.x, (int)cursorPosInBoard.y];
             cursorPosInWorld.z = -1;
-            cursor.transform.position = Vector2.Lerp(cursor.transform.position, cursorPosInWorld, .2f);
+            cursor.transform.position = Vector2.Lerp(cursor.transform.position, cursorPosInWorld, cellMovementSpeed + Time.deltaTime);
 
             if(rowToShiftIndex > -1)
             {
@@ -128,11 +131,11 @@ namespace GranCook
             for (int i = 0; i < gridSize; i++)
             {
                 Vector2 cellPos = grid[rowIndex, i];
-                Vector2 destinationPos = new Vector2(cellPos.x + (Distance * direction), cellPos.y);
+                Vector3 destinationPos = new Vector3(cellPos.x + (Distance * direction), cellPos.y, 1);
                 var cellObject = cellContainer.Find($"{rowIndex},{i}");
-                cellObject.position = Vector2.Lerp(cellObject.position, destinationPos, .05f);
+                cellObject.position = Vector3.Lerp(cellObject.position, destinationPos, cellMovementSpeed + Time.deltaTime);
             }
-            shiftLastCell.position = Vector2.Lerp(shiftLastCell.position, lastCellDestination, .05f);
+            shiftLastCell.position = Vector3.Lerp(shiftLastCell.position, lastCellDestination, cellMovementSpeed + Time.deltaTime);
         }
 
         #endregion
@@ -187,11 +190,11 @@ namespace GranCook
             for (int i = 0; i < gridSize; i++)
             {
                 Vector2 cellPos = grid[i, colIndex];
-                Vector2 destinationPos = new Vector2(cellPos.x, cellPos.y + (Distance * direction));
+                Vector3 destinationPos = new Vector3(cellPos.x, cellPos.y + (Distance * direction), 1);
                 var cellObject = cellContainer.Find($"{i},{colIndex}");
-                cellObject.position = Vector2.Lerp(cellObject.position, destinationPos, .05f);
+                cellObject.position = Vector3.Lerp(cellObject.position, destinationPos, cellMovementSpeed + Time.deltaTime);
             }
-            shiftLastCell.position = Vector2.Lerp(shiftLastCell.position, lastCellDestination, .05f);
+            shiftLastCell.position = Vector3.Lerp(shiftLastCell.position, lastCellDestination, cellMovementSpeed + Time.deltaTime);
         }
 
         #endregion
@@ -214,7 +217,8 @@ namespace GranCook
             GameObject cursorPrefab = Resources.Load("Prefabs/UIs/Main/Cursor") as GameObject;
             cursor = Instantiate(cursorPrefab);
             cursor.transform.parent = transform;
-            cursor.transform.localPosition = Vector2.zero;
+            cursor.transform.localPosition = Vector3.forward * -1;
+
         }
 
         void GenerateGridGameObjects()
