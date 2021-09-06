@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Intro.unity
     guid: 937bd2f06a423de4597e678349bfbbb3
   - enabled: 1
-    path: Assets/Scenes/MultiplayerCaracterSelect.unity
+    path: Assets/Scenes/MultiplayerCharacterSelect.unity
     guid: 8998348344bd05142acb027ed9ec1e96
   - enabled: 1
     path: Assets/Scenes/Main.unity

@@ -11,7 +11,7 @@ namespace GranCook.Scenes
         {
             GetComponent<AudioSource>().Play();
 
-            SceneLoader.Instance.Load("MultiplayerCharacterSelect");
+            SceneLoader.Instance.Load("Menu");
         }
     }
 }
