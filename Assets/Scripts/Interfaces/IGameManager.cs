@@ -19,5 +19,8 @@ namespace GranCook.Interfaces
         void GameReset();
 
         void Pause();
+
+        void SaveSettings();
+        void LoadSettings();
     }
 }

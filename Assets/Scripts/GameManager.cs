@@ -1,7 +1,9 @@
 using GranCook.Interfaces;
+using GranCook.Objects.Data;
 using GranCook.Utilities;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -17,11 +19,18 @@ namespace GranCook
 
         public IPlayer[] Players { get; set; }
         public int PlayerCount { get; set; }
+        public SettingsData Settings { get; set; }
+
+        string savePath = Application.persistentDataPath + "/settings.json";
 
         public GameManager()
         {
             Players = new Player[4];
             PlayerCount = 0;
+
+            LoadSettings();
+
+            //SaveSettings();
         }
 
         PlayerInput[] GetPlayerInputs()
@@ -128,6 +137,38 @@ namespace GranCook
             PlayerCount = 0;
 
             SceneLoader.Instance.Load("Intro");
+        }
+
+        public void SaveSettings()
+        {
+            string json = JsonUtility.ToJson(Settings);
+            
+            using(StreamWriter sw = new StreamWriter(savePath))
+            {
+                sw.Write(json);
+            }
+        }
+
+        public void LoadSettings()
+        {
+            var settings = Object.Instantiate(Resources.Load("States/SettingsData")) as SettingsData;
+            string json = "";
+
+            if (File.Exists(savePath))
+            {
+                using(StreamReader sr = new StreamReader(savePath))
+                {
+                    json = sr.ReadToEnd();
+                }
+
+                if (!string.IsNullOrEmpty(json))
+                {
+                    JsonUtility.FromJsonOverwrite(json, settings);
+                }
+            }
+
+
+            Settings = settings;
         }
     }
 }

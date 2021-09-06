@@ -50,5 +50,7 @@ namespace GranCook.Interfaces
         /// Push non-empty rows downward
         /// </summary>
         void ShiftClearedRows();
+
+        
     }
 }
