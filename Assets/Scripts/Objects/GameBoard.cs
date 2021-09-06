@@ -64,7 +64,7 @@ namespace GranCook.Objects
         {
             int[] row = new int[GRID_SIZE];
             row.Populate(-1);
-            Grid.SetColumn(rowIndex, row);
+            Grid.SetRow(rowIndex, row);
         }
 
         public void ShiftClearedColumns()

@@ -490,6 +490,7 @@ MonoBehaviour:
   - {r: 0.3490566, g: 0.2956479, b: 0.17946778, a: 1}
   - {r: 0.3773585, g: 0.16553932, b: 0.31819242, a: 1}
   - {r: 0.27887064, g: 0.4245283, b: 0.25832146, a: 1}
+  debugEmptyColor: {r: 1, g: 1, b: 1, a: 0.9137255}
   debugShowGridCells: 0
   isShifting: 0
   shiftDirection: 1

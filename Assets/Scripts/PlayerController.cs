@@ -32,8 +32,6 @@ namespace GranCook
             if (!axisSelected)
             {
                 Vector2 pos = Player.GameBoard.Cursor;
-                Debug.Log("vector pos => " + pos.x + ", " + pos.y);
-                Debug.Log(Player.GameBoard.Grid.DebugToString());
             }  
             axisSelected = !axisSelected;
         }
@@ -58,7 +56,8 @@ namespace GranCook
                     Vector2 pos = Player.GameBoard.Cursor;
 
                     Player.GameBoard.ShiftAxis(pos, dir);
-                    Player.GameBoard.MoveCursor(dir);
+                    // TODO player option for static/dynamic cursor
+                    //Player.GameBoard.MoveCursor(dir);
                     Debug.Log(Player.GameBoard.Grid.DebugToString());
 
                     gameBoardBehavior.ShiftAxis(pos, dir);
