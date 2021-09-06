@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using GranCook.Extensions;
 
 namespace GranCook
 {
@@ -28,6 +29,12 @@ namespace GranCook
         public void OnGameSelect()
         {
             PrintInputActionState("Select");
+            if (!axisSelected)
+            {
+                Vector2 pos = Player.GameBoard.Cursor;
+                Debug.Log("vector pos => " + pos.x + ", " + pos.y);
+                Debug.Log(Player.GameBoard.Grid.DebugToString());
+            }  
             axisSelected = !axisSelected;
         }
 
@@ -43,7 +50,19 @@ namespace GranCook
 
                 // Move the cursor
                 Player.GameBoard.MoveCursor(dir);
-                Debug.Log(Player.GameBoard.Grid[(int)Player.GameBoard.Cursor.x, (int)Player.GameBoard.Cursor.y]);
+            }
+            else
+            {
+                if(!gameBoardBehavior.isShifting)
+                {
+                    Vector2 pos = Player.GameBoard.Cursor;
+
+                    Player.GameBoard.ShiftAxis(pos, dir);
+                    Player.GameBoard.MoveCursor(dir);
+                    Debug.Log(Player.GameBoard.Grid.DebugToString());
+
+                    gameBoardBehavior.ShiftAxis(pos, dir);
+                }          
             }
         }
 
