@@ -16,7 +16,7 @@ namespace GranCook
         public float cellScale = 1f;
         public float cellInBetweenDistance = 1f;
 
-        public float cellMovementSpeed = .5f;
+        public float cellMovementTime = .1f;
 
         public float Distance => Length / gridSize;
 
@@ -63,20 +63,18 @@ namespace GranCook
         void Update()
         {
             // Move the cursor 
-            Vector2 cursorPosInBoard = Player.GameBoard.Cursor;
-            Vector3 cursorPosInWorld = grid[(int)cursorPosInBoard.x, (int)cursorPosInBoard.y];
-            cursorPosInWorld.z = -1;
-            cursor.transform.position = Vector2.Lerp(cursor.transform.position, cursorPosInWorld, cellMovementSpeed + Time.deltaTime);
+            
+            //cursor.transform.position = Vector2.Lerp(cursor.transform.position, cursorPosInWorld, cellMovementSpeed + Time.deltaTime);
 
-            if (rowToShiftIndex > -1)
-            {
-                ShiftRow(rowToShiftIndex, shiftDirection);
-            }
+            //if (rowToShiftIndex > -1)
+            //{
+            //    ShiftRow(rowToShiftIndex, shiftDirection);
+            //}
 
-            if (colToShiftIndex > -1)
-            {
-                ShiftCol(colToShiftIndex, shiftDirection);
-            }
+            //if (colToShiftIndex > -1)
+            //{
+            //    ShiftCol(colToShiftIndex, shiftDirection);
+            //}
 
             if (!isShifting)
             {
@@ -91,6 +89,14 @@ namespace GranCook
                 }
             }
 
+        }
+
+        public void MoveCursor()
+        {
+            Vector2 cursorPosInBoard = Player.GameBoard.Cursor;
+            Vector3 cursorPosInWorld = grid[(int)cursorPosInBoard.x, (int)cursorPosInBoard.y];
+            cursorPosInWorld.z = -1;
+            StartCoroutine(LerpPosition(cursor.transform, cursorPosInWorld, cellMovementTime));
         }
 
         public void CheckForMatchingRows()
@@ -200,6 +206,7 @@ namespace GranCook
         {
             rowToShiftIndex = rowIndex;
             shiftDirection = direction;
+            ShiftRow(rowToShiftIndex, shiftDirection);
         }
 
         void ShiftRow(int rowIndex, int direction)
@@ -212,11 +219,11 @@ namespace GranCook
             }
             ShiftRowAnimation(rowIndex, direction);
 
-            Vector2 v2 = shiftLastCell.position;
-            if (Vector2.Distance(v2, lastCellDestination) < 0.008f)
-            {
-                ShiftAnimationCallback();
-            }
+            //Vector2 v2 = shiftLastCell.position;
+            //if (Vector2.Distance(v2, lastCellDestination) < 0.008f)
+            //{
+            //    ShiftAnimationCallback();
+            //}
         }
 
         void ShiftRowInit(int rowIndex, int direction)
@@ -247,9 +254,17 @@ namespace GranCook
                 Vector2 cellPos = grid[rowIndex, i];
                 Vector3 destinationPos = new Vector3(cellPos.x + (Distance * direction), cellPos.y, 1);
                 var cellObject = cellContainer.Find($"{rowIndex},{i}");
-                cellObject.position = Vector3.Lerp(cellObject.position, destinationPos, cellMovementSpeed + Time.deltaTime);
+                //cellObject.position = Vector3.Lerp(cellObject.position, destinationPos, cellMovementSpeed + Time.deltaTime);
+
+                StartCoroutine(LerpPosition(cellObject, destinationPos, cellMovementTime));
+
             }
-            shiftLastCell.position = Vector3.Lerp(shiftLastCell.position, lastCellDestination, cellMovementSpeed + Time.deltaTime);
+            //shiftLastCell.position = Vector3.Lerp(shiftLastCell.position, lastCellDestination, cellMovementSpeed + Time.deltaTime);
+
+            StartCoroutine(ShiftLastCell(shiftLastCell, lastCellDestination, cellMovementTime));
+
+
+
         }
 
         #endregion
@@ -259,6 +274,8 @@ namespace GranCook
         {
             colToShiftIndex = colIndex;
             shiftDirection = direction;
+
+            ShiftCol(colToShiftIndex, shiftDirection);
         }
 
         void ShiftCol(int colIndex, int direction)
@@ -271,11 +288,11 @@ namespace GranCook
             }
             ShiftColAnimation(colIndex, direction);
 
-            Vector2 v2 = shiftLastCell.position;
-            if (Vector2.Distance(v2, lastCellDestination) < 0.008f)
-            {
-                ShiftAnimationCallback();
-            }
+            //Vector2 v2 = shiftLastCell.position;
+            //if (Vector2.Distance(v2, lastCellDestination) < 0.008f)
+            //{
+            //    ShiftAnimationCallback();
+            //}
         }
 
         void ShiftColInit(int colIndex, int direction)
@@ -307,9 +324,13 @@ namespace GranCook
                 Vector2 cellPos = grid[i, colIndex];
                 Vector3 destinationPos = new Vector3(cellPos.x, cellPos.y + (Distance * direction), 1);
                 var cellObject = cellContainer.Find($"{i},{colIndex}");
-                cellObject.position = Vector3.Lerp(cellObject.position, destinationPos, cellMovementSpeed + Time.deltaTime);
+
+                StartCoroutine(LerpPosition(cellObject, destinationPos, cellMovementTime));
+                //cellObject.position = Vector3.Lerp(cellObject.position, destinationPos, cellMovementSpeed + Time.deltaTime);
             }
-            shiftLastCell.position = Vector3.Lerp(shiftLastCell.position, lastCellDestination, cellMovementSpeed + Time.deltaTime);
+
+            StartCoroutine(ShiftLastCell(shiftLastCell, lastCellDestination, cellMovementTime));
+            //shiftLastCell.position = Vector3.Lerp(shiftLastCell.position, lastCellDestination, cellMovementSpeed + Time.deltaTime);
         }
 
         #endregion
@@ -385,6 +406,38 @@ namespace GranCook
         {
             Player.GameState.CurrentScore += points;
             scoreCounter.text = Player.GameState.CurrentScore.ToString();
+        }
+
+        IEnumerator LerpPosition(Transform toMove, Vector3 targetPosition, float duration)
+        {
+            float time = 0;
+            Vector3 startPosition = toMove.position;
+
+            while (time < duration)
+            {
+                toMove.position = Vector3.Lerp(startPosition, targetPosition, time / duration);
+                time += Time.deltaTime;
+                yield return null;
+            }
+
+            toMove.position = targetPosition;
+        }
+
+        IEnumerator ShiftLastCell(Transform toMove, Vector3 targetPosition, float duration)
+        {
+            float time = 0;
+            Vector3 startPosition = toMove.position;
+
+            while (time < duration)
+            {
+                toMove.position = Vector3.Lerp(startPosition, targetPosition, time / duration);
+                time += Time.deltaTime;
+                yield return null;
+            }
+
+            toMove.position = targetPosition;
+
+            ShiftAnimationCallback();
         }
 
         private void OnDrawGizmos()

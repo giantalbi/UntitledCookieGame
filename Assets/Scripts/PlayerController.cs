@@ -48,6 +48,7 @@ namespace GranCook
 
                 // Move the cursor
                 Player.GameBoard.MoveCursor(dir);
+                gameBoardBehavior.MoveCursor();
             }
             else
             {
