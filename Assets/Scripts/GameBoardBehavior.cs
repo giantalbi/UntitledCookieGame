@@ -57,6 +57,7 @@ namespace GranCook
             GenerateCursor();
             GenerateGridGameObjects();
 
+            MoveCursor();
         }
 
         // Update is called once per frame
@@ -370,6 +371,8 @@ namespace GranCook
 
                     cellObj.name = $"{i},{j}";
                     cellObj.transform.parent = cellContainer;
+                    cellObj.transform.localScale = Vector3.one * cellScale;
+
                     Vector3 pos = grid[i, j];
                     pos.z = 1;
                     cellObj.transform.position = pos;
